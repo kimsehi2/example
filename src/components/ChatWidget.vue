@@ -118,18 +118,17 @@ watch([messages, isLoading], () => {
 </script>
 
 <style scoped>
-/* 외부 폰트나 부모 스타일 영향 차단 */
 .chat-widget-container {
   font-family: 'Malgun Gothic', '맑은 고딕', sans-serif;
   box-sizing: border-box;
 }
 
-/* 1. 우측 하단 고정 트리거 버튼 - 어르신들이 누르기 쉽게 크고 직관적으로 디자인 */
+/* 우측 하단 고정 트리거 버튼 - Warm Clay로 변경하여 시인성 확보 */
 .chat-trigger-btn {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  background-color: #312e81; /* 눈에 확 띄는 짙은 남색 */
+  background-color: var(--color-warm-clay, #C97B5A);
   color: white;
   border: none;
   border-radius: 50px;
@@ -137,7 +136,7 @@ watch([messages, isLoading], () => {
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 24px rgba(95, 115, 85, 0.2);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -147,43 +146,39 @@ watch([messages, isLoading], () => {
 
 .chat-trigger-btn:hover {
   transform: scale(1.05);
-  background-color: #1e1b4b;
+  background-color: #b26545; /* 웜 클레이 약간 어둡게 */
 }
 
 .chat-icon {
   font-size: 24px;
 }
 
-.trigger-text {
-  letter-spacing: -0.5px;
-}
-
-/* 2. 챗봇 전체 창 - 어르신 시야에 잘 들어오도록 400px 크기로 큼직하게 구성 */
+/* 챗봇 창 - 테두리를 Sage Deep으로 변경 */
 .chat-window {
   position: fixed;
   bottom: 24px;
   right: 24px;
   width: 410px;
   height: 600px;
-  background-color: #ffffff;
+  background-color: var(--color-cream, #FAF6EE); /* 배경은 크림색 */
   border-radius: 20px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 12px 36px rgba(46, 43, 36, 0.15);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 3px solid #312e81; /* 외곽 테두리를 굵게 주어 배경과 확실하게 분리 */
+  border: 3px solid var(--color-sage-deep, #5F7355);
   z-index: 9999;
 }
 
-/* 헤더 - 굵고 선명한 남색 배경 */
+/* 헤더 - Sage Deep 적용 */
 .chat-header {
-  background-color: #312e81;
+  background-color: var(--color-sage-deep, #5F7355);
   color: white;
   padding: 16px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #1e1b4b;
+  border-bottom: 2px solid #4a5c41;
 }
 
 .header-title {
@@ -223,33 +218,31 @@ watch([messages, isLoading], () => {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
-  background-color: #f8fafc; /* 부드럽고 피로감이 적은 밝은 회색 바탕 */
+  background-color: var(--color-cream, #FAF6EE); /* 편안한 크림 바탕 */
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-/* 스크롤바 보기 편하게 조금 두껍게 변경 */
 .chat-body::-webkit-scrollbar {
   width: 8px;
 }
 .chat-body::-webkit-scrollbar-thumb {
-  background-color: #cbd5e1;
+  background-color: var(--color-sage-soft, #AEC29C);
   border-radius: 4px;
 }
 
-/* 말풍선 레이아웃 */
 .message-row {
   display: flex;
   width: 100%;
 }
 
 .message-row.user {
-  justify-content: flex-end; /* 내 질문은 우측 정렬 */
+  justify-content: flex-end;
 }
 
 .message-row.assistant {
-  justify-content: flex-start; /* AI 답변은 좌측 정렬 */
+  justify-content: flex-start;
 }
 
 .message-bubble {
@@ -259,10 +252,10 @@ watch([messages, isLoading], () => {
   gap: 4px;
 }
 
-/* 누구의 말인지 알려주는 라벨 */
 .sender-label {
   font-size: 13px;
-  color: #64748b;
+  color: var(--color-ink-brown, #2E2B24);
+  opacity: 0.8;
   font-weight: bold;
   padding-left: 4px;
 }
@@ -271,36 +264,35 @@ watch([messages, isLoading], () => {
   padding-right: 4px;
 }
 
-/* 실제 텍스트 말풍선 - 16px 크기의 굵은 글씨와 줄간격 확보 */
 .message-text {
   padding: 14px 18px;
   border-radius: 16px;
   font-size: 16px;
   font-weight: 500;
   line-height: 1.6;
-  white-space: pre-line; /* 서버에서 보낸 줄바꿈 정직하게 줄바꿈 처리 */
+  white-space: pre-line;
   word-break: break-all;
 }
 
-/* 내 말풍선: 진한 남색 배경에 흰색 글자 (강한 대비) */
+/* 내 말풍선: Warm Clay 배경에 흰색 글자 */
 .user .message-text {
-  background-color: #312e81;
+  background-color: var(--color-warm-clay, #C97B5A);
   color: #ffffff;
   border-bottom-right-radius: 2px;
 }
 
-/* 도우미 말풍선: 밝은 미색 바탕에 아주 어두운 차콜색 글자 */
+/* 도우미 말풍선: 연한 세이지(Sage Soft) 배경에 본문 다크 브라운 글씨 */
 .assistant .message-text {
   background-color: #ffffff;
-  color: #0f172a;
-  border: 2px solid #e2e8f0;
+  color: var(--color-ink-brown, #2E2B24);
+  border: 2px solid var(--color-sage-soft, #AEC29C);
   border-bottom-left-radius: 2px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 2px 4px rgba(46, 43, 36, 0.05);
 }
 
-/* 로딩 애니메이션 */
 .loading {
-  color: #64748b;
+  color: var(--color-ink-brown, #2E2B24);
+  opacity: 0.7;
   font-style: italic;
   font-size: 15px;
 }
@@ -308,33 +300,33 @@ watch([messages, isLoading], () => {
 /* 하단 입력 폼 영역 */
 .chat-footer {
   padding: 16px;
-  background-color: #ffffff;
-  border-top: 2px solid #e2e8f0;
+  background-color: var(--color-cream, #FAF6EE);
+  border-top: 2px solid var(--color-sage-soft, #AEC29C);
   display: flex;
   gap: 10px;
   align-items: center;
 }
 
-/* 입력창: 눈이 침침하신 어르신들을 위해 폰트 16px 지정 */
 .chat-footer input {
   flex: 1;
-  border: 2px solid #cbd5e1;
+  border: 2px solid var(--color-sage-soft, #AEC29C);
+  background-color: #ffffff;
   border-radius: 10px;
   padding: 14px;
   font-size: 16px;
   font-weight: bold;
-  color: #0f172a;
+  color: var(--color-ink-brown, #2E2B24);
   outline: none;
   transition: border-color 0.2s ease;
 }
 
 .chat-footer input:focus {
-  border-color: #312e81;
+  border-color: var(--color-sage-deep, #5F7355);
 }
 
-/* 물어보기 버튼: 큼직하고 두툼하게 설계 */
+/* 물어보기 버튼: Sage Deep 적용 */
 .send-btn {
-  background-color: #312e81;
+  background-color: var(--color-sage-deep, #5F7355);
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -347,12 +339,13 @@ watch([messages, isLoading], () => {
 }
 
 .send-btn:hover {
-  background-color: #1e1b4b;
+  background-color: #4a5c41;
 }
 
 .send-btn:disabled, .chat-footer input:disabled {
-  background-color: #cbd5e1;
-  color: #94a3b8;
+  background-color: var(--color-sage-soft, #AEC29C);
+  color: #ffffff;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 </style>

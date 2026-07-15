@@ -1,0 +1,6 @@
+cat > public/no-image.svg << 'EOF'
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200">
+  <rect width="300" height="200" fill="#e2e8f0"/>
+  <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-family="sans-serif" font-size="16" fill="#94a3b8">No Image</text>
+</svg>
+EOF

@@ -1,37 +1,57 @@
 <!-- src/components/CategoryMenu.vue -->
 <script setup>
+import { defineProps, defineEmits } from 'vue';
+
 const props = defineProps({
   activeCategory: {
-    type: String,
+    type: String, // useTourData.js의 영어 Key ('accommodation' 등)를 받습니다.
     required: true
   }
 });
 
 const emit = defineEmits(['select-category']);
 
-const categories = [
-  { key: 'accommodation', label: '🏨 숙박' },
-  { key: 'festivals', label: '🎉 축제/행사' },
-  { key: 'sports', label: '⚽ 레포츠' },
-  { key: 'travel_course', label: '🗺️ 여행코스' },
-  { key: 'culture', label: '🎨 문화시설' },
-  { key: 'shopping', label: '🛍️ 쇼핑' },
-  { key: 'tour_spots', label: '⛰️ 관광지' }
+// ❗ useTourData.js의 CATEGORY_DATA_MAP Key와 정확하게 일치시켰습니다.
+const firstLineCategories = [
+  { id: 'accommodation', label: '🏨 숙박' },
+  { id: 'festivals', label: '🎉 축제/행사' },
+  { id: 'sports', label: '🏂 레포츠' },
+  { id: 'travel_course', label: '🗺️ 여행코스' }
 ];
 
-const select = (key) => {
-  emit('select-category', key);
+const secondLineCategories = [
+  { id: 'culture', label: '🏛️ 문화시설' },
+  { id: 'shopping', label: '🛍️ 쇼핑' },
+  { id: 'tour_spots', label: '🏞️ 관광지' }
+];
+
+const handleSelect = (categoryKey) => {
+  // 이제 'festivals', 'culture' 같은 영어 Key를 부모에게 전달합니다.
+  emit('select-category', categoryKey);
 };
 </script>
 
 <template>
-  <div class="category-menu-container">
-    <div class="category-tabs">
+  <div class="fixed-two-line-menu">
+    <!-- 첫 번째 줄 -->
+    <div class="menu-row">
       <button 
-        v-for="cat in categories" 
-        :key="cat.key"
-        :class="['tab-btn', { active: activeCategory === cat.key }]"
-        @click="select(cat.key)"
+        v-for="cat in firstLineCategories" 
+        :key="cat.id"
+        :class="['menu-item-btn', { 'active': activeCategory === cat.id }]"
+        @click="handleSelect(cat.id)"
+      >
+        {{ cat.label }}
+      </button>
+    </div>
+    
+    <!-- 두 번째 줄 -->
+    <div class="menu-row">
+      <button 
+        v-for="cat in secondLineCategories" 
+        :key="cat.id"
+        :class="['menu-item-btn', { 'active': activeCategory === cat.id }]"
+        @click="handleSelect(cat.id)"
       >
         {{ cat.label }}
       </button>
@@ -40,37 +60,52 @@ const select = (key) => {
 </template>
 
 <style scoped>
-.category-menu-container {
-  margin-bottom: 24px;
-  overflow-x: auto;
-}
-
-.category-tabs {
+.fixed-two-line-menu {
   display: flex;
-  gap: 10px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid #e5e7eb;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
 }
 
-.tab-btn {
-  white-space: nowrap;
-  padding: 10px 18px;
-  border: none;
-  background: #f3f4f6;
-  border-radius: 30px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.2s ease;
+.menu-row {
+  display: flex;
+  gap: 8px;
+  width: 100%;
 }
 
-.tab-btn:hover {
-  background: #e5e7eb;
-}
-
-.tab-btn.active {
-  background: #4f46e5;
-  color: white;
+.menu-item-btn {
+  flex: 1;
+  background-color: var(--card-bg);
+  border: 2px solid var(--border-color);
+  color: var(--text-main);
+  padding: 10px 6px;
+  border-radius: 8px;
+  font-size: 13px;
   font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+@media (min-width: 768px) {
+  .menu-item-btn {
+    font-size: 14px;
+    padding: 12px 10px;
+  }
+}
+
+.menu-item-btn:hover {
+  background-color: var(--color-sage-soft);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.menu-item-btn.active {
+  background-color: var(--color-sage-deep);
+  border-color: var(--color-sage-deep);
+  color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 </style>

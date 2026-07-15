@@ -42,11 +42,11 @@ const closeDetail = () => {
         @click="openDetail(item)"
       >
         <div class="image-box">
-          <img 
-            :src="item.firstimage || 'https://via.placeholder.com/300x200?text=No+Image'" 
-            :alt="item.title"
-            loading="lazy"
-          />
+            <img 
+                :src="item.firstimage || item.firstimage2 || '/no-image.svg'" 
+                :alt="item.title"
+                loading="lazy"
+            />
         </div>
         
         <div class="card-content">
@@ -71,12 +71,11 @@ const closeDetail = () => {
 
         <!-- 스크롤 가능한 본문 영역 -->
         <div class="modal-body">
-          <div class="detail-image">
             <img 
-              :src="selectedItem.firstimage || 'https://via.placeholder.com/600x400?text=No+Image'" 
+              :src="selectedItem.firstimage || '/no-image.svg'" 
               :alt="selectedItem.title" 
             />
-          </div>
+          
 
           <div class="detail-info">
             <p class="info-row"><strong>📍 주소:</strong> {{ selectedItem.addr1 }} {{ selectedItem.addr2 }}</p>
